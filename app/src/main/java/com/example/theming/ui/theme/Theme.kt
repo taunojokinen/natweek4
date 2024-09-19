@@ -4,6 +4,7 @@ import android.app.Activity
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Shapes
@@ -15,21 +16,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-
+import androidx.compose.ui.unit.dp
 
 
 private val DarkColorScheme = darkColorScheme(
     primary = CustomPrimaryColor,
-    secondary = Color(0XFF03DAC5),
-    tertiary = Pink80
+    secondary = CustomBlueColor,
+    tertiary = Pink40,
+    background = CustomBlueColor,
+    onBackground = CustomLightColor,
+    onPrimary = CustomLightColor,
+    onSecondary = CustomBlueColor,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = CustomPrimaryColor,
     secondary = Color(0XFF03DAC5),
     tertiary = Pink40,
-    background = CustomPrimaryColor,
-    onBackground = Color(0xFF1C1B1F),
+    background = CustomLightColor,
+    onBackground = CustomBlueColor,
+    onPrimary = CustomLightColor,
+    onSecondary = CustomBlueColor,
+ // Custom color for headlineSmall
+
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -40,6 +49,12 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
+)
+
+val CustomShapes = Shapes(
+    small = RoundedCornerShape(4.dp),
+    medium = RoundedCornerShape(8.dp),
+    large = RoundedCornerShape(16.dp)
 )
 
 @Composable
@@ -54,8 +69,8 @@ fun MyTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        typography = Typography,
-        //shapes = Shapes,
+        typography = CustomTypography,
+        shapes = CustomShapes,
         content = content
     )
 }

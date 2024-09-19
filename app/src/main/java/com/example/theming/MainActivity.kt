@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,12 +13,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +40,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier =
+                    Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.secondary
                 ) {
                   Theming()
@@ -46,27 +56,36 @@ fun Theming() {
 
     val appModifier = Modifier
         .fillMaxWidth()
-        .padding(16.dp)
-        //.background(color = Color.Red)
+        .padding(24.dp)
+
+    val themeText = if (isSystemInDarkTheme()) "Dark Theme" else "Light Theme"
+
+    val isSystemDarkTheme = isSystemInDarkTheme()
+    var isDarkTheme by remember { mutableStateOf(isSystemDarkTheme) }
+
+
 
     Column (
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        horizontalAlignment = Alignment.CenterHorizontally,
 
+
+    ) {
         Text(
-            text = "My Title",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = appModifier
+            text = themeText,
+            style = MaterialTheme.typography.headlineSmall  ,
+            modifier = appModifier,
         )
+
+
         OutlinedTextField(
             value = "",
             onValueChange = {},
             modifier = appModifier
         )
         Button(
-            onClick = { },
+            onClick = {{ isDarkTheme = !isDarkTheme } },
             modifier = appModifier,
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
@@ -79,7 +98,7 @@ fun Theming() {
 
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFFD7D3D3)
 @Composable
 fun ThemingPreview() {
     MyTheme {
